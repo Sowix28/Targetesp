@@ -1,0 +1,36 @@
+name: Build Mod Jar
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo'yu indir
+        uses: actions/checkout@v4
+
+      - name: Zip'i ac
+        run: unzip -o targetesp-mod.zip
+
+      - name: JDK 21 kur
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Gradle wrapper olustur
+        working-directory: targetesp-mod
+        run: gradle wrapper --gradle-version 8.10
+
+      - name: Derle
+        working-directory: targetesp-mod
+        run: ./gradlew build --no-daemon --stacktrace
+
+      - name: Jar dosyasini yukle (indirilebilir yap)
+        uses: actions/upload-artifact@v4
+        with:
+          name: targetesp-mod-jar
+          path: targetesp-mod/build/libs/*.jar
