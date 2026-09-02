@@ -23,7 +23,7 @@ jobs:
 
       - name: Gradle wrapper olustur
         working-directory: targetesp-mod
-        run: gradle wrapper --gradle-version 8.10
+        run: gradle wrapper --gradle-version 8.11
 
       - name: Derle
         working-directory: targetesp-mod
